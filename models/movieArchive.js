@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+const movieSchema = new mongoose.Schema({
+    movie_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie'
+    },
+    title: {
+        type: String,
+        require: true
+    }
+});
 const movieArchiveSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -15,7 +25,8 @@ const movieArchiveSchema = new mongoose.Schema({
     },
     description: {
         type: String
-    }
+    },
+    movies: [movieSchema]
 });
 
 const MovieArchive = mongoose.model('MovieArchive', movieArchiveSchema);

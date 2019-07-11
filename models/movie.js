@@ -1,16 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const ratingSchema = new mongoose.Schema({
-    source: {
-        type: String,
-        require: true
-    },
-    value: {
-        type: String,
-        require: true
-    },
-});
 const movieSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -85,7 +75,16 @@ const movieSchema = new mongoose.Schema({
     response: {
         type: String,
     },
-    ratings: [ratingSchema]
+    ratings: [new mongoose.Schema({
+        source: {
+            type: String,
+            require: true
+        },
+        value: {
+            type: String,
+            require: true
+        },
+    })]
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
@@ -93,6 +92,30 @@ const Movie = mongoose.model('Movie', movieSchema);
 function validateMovie(movie) {
     const schema = {
         title: Joi.string().required(),
+        year: Joi.number().optional(),
+        rated: Joi.string().optional(),
+        released: Joi.string().optional(),
+        runtime: Joi.string().optional(),
+        genre: Joi.string().optional(),
+        director: Joi.string().optional(),
+        writer: Joi.string().optional(),
+        actors: Joi.string().optional(),
+        plot: Joi.string().optional(),
+        language: Joi.string().optional(),
+        country: Joi.string().optional(),
+        awards: Joi.string().optional(),
+        poster: Joi.string().optional(),
+        metascore: Joi.string().optional(),
+        imdb_rating: Joi.string().optional(),
+        imdb_votes: Joi.string().optional(),
+        imdb_id: Joi.string().optional(),
+        type: Joi.string().optional(),
+        dvd: Joi.string().optional(),
+        box_office: Joi.string().optional(),
+        production: Joi.string().optional(),
+        website: Joi.string().optional(),
+        response: Joi.string().optional(),
+        ratings: Joi.array().optional(),
     };
 
     return Joi.validate(movie, schema);
